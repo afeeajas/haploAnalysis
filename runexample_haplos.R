@@ -1,7 +1,7 @@
 setwd("")
 
 ## source the functions
-source('haplotypeBlV5genogrm.R')
+source('haplotypeBglV5genogrm.R')
 
 #make custom made haploblocks
 haploblocks <- makehaploblocks()
