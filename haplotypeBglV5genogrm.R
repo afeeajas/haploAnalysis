@@ -1,4 +1,29 @@
-#haploviewfile='/home/afeesa/paper3/data/haploview_dat/haplblock'
+
+makehaploblocks <- function(mapinfohap='/home/afeesa/paper3/data/haploview_dat/GENOimp_filtssa12.map',nbsize=10000){
+
+  markermap <- read.table(paste0(mapinfohap),stringsAsFactors = F)[,-3]
+  colnames(markermap) <- c('CHR','SNP','BP')
+  markermap$nnum <- 1:nrow(markermap)
+  gnome.chr.str <- head(markermap$BP,n=1)
+  gnome.chr.end <- ceiling(tail(markermap$BP,n=1))
+  slidewind_str <- seq(gnome.chr.str,gnome.chr.end,nbsize)
+  slidewind_end <- c(seq(gnome.chr.str+nbsize+1,gnome.chr.end,nbsize+1),gnome.chr.end)
+  haploblocks <- data.frame(blocknr=numeric(),hapstr=numeric(),
+                            hapend=numeric(),stringsAsFactors = F)
+  for(w in 1:length(slidewind_end)){
+    nwind_snp <- markermap[which(markermap$BP>=slidewind_str[w] & 
+                                   markermap$BP<=slidewind_end[w]),]
+    if(nrow(nwind_snp)<1){next()}
+    nwind_snp <- cbind.data.frame(blocknr=w,hapstr=nwind_snp$nnum[1],
+                                  hapend=nwind_snp$nnum[nrow(nwind_snp)],
+                                  stringsAsFactors=F)
+    haploblocks <- rbind.data.frame(haploblocks,nwind_snp,stringsAsFactors = F)
+  }
+  haploblocks$nsnpinwind <- haploblocks$hapend-haploblocks$hapstr
+  haploblocks <- haploblocks[which(haploblocks$nsnpinwind>1),-4]
+return(haploblocks)
+}
+ 
 getblockhaploview <- function(haploviewfile){
   hapblocks <- read.table(haploviewfile,fill=T,stringsAsFactors=F,na.strings=" ")
   hapblocks <- hapblocks[which(hapblocks$V1=='BLOCK'),]
