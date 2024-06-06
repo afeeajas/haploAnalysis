@@ -1,2 +1,2 @@
 # haploAnalysis
-This script is based on an original script written by Solomon Boison
+This script has been adapted to Beagle 5.4, original script was written by Solomon Boison based on earlier version of Beagle.
