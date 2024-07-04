@@ -1,5 +1,5 @@
 
-makehaploblocks <- function(mapinfohap='/home/afeesa/paper3/data/haploview_dat/GENOimp_filtssa12.map',nbsize=10000){
+makehaploblocks <- function(mapinfohap='GENOimp.map',nbsize=10000){
 
   markermap <- read.table(paste0(mapinfohap),stringsAsFactors = F)[,-3]
   colnames(markermap) <- c('CHR','SNP','BP')
