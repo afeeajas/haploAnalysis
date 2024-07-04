@@ -7,8 +7,8 @@ source('haplotypeBglV5genogrm.R')
 haploblocks <- makehaploblocks(mapinfohap='GENOimp.map',nbsize=10000)
 
 #or make haploblocks based on Haploview output
+haploblocks <-getblockhaploview(haploviewfile="haploviewOutput")
 
-
-## after phasing your data with beagle extract the haplotypes for each block
+## after phasing your data with beagle, extract the haplotypes for each block
 haplos.allele <- makehaplotypes(phasedbgl='GENOphased.vcf',mapinfohap='GENOimp.map',hapblocks=haploblocks)
 
